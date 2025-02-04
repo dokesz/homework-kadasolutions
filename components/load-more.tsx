@@ -5,12 +5,12 @@ import { Product } from "@/lib/interfaces/product.interface";
 import { useEffect, useState } from "react";
 import ProductCard from "./product/product-card";
 
-let skip = 10;
 
 export default function LoadMore() {
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasmore] = useState(true);
+    const [skip, setSkip] = useState(10);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -18,7 +18,7 @@ export default function LoadMore() {
                 setIsLoading(true);
                 fetchProducts(skip, 10).then(data => {
                     setProducts(prevProducts => [...prevProducts, ...data]);
-                    skip += 10;
+                    setSkip(prevSkip => prevSkip + 10);
                     data.length > 0 ? setHasmore(true) : setHasmore(false);
                     setIsLoading(false);
                 });
@@ -26,7 +26,7 @@ export default function LoadMore() {
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [isLoading]);
+    }, [isLoading, skip]);
 
     return (
         <>
