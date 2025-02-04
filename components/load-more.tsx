@@ -16,12 +16,12 @@ export default function LoadMore() {
         const handleScroll = () => {
             if (window.innerHeight + Math.ceil(window.pageYOffset) >= document.documentElement.scrollHeight - 100 && !isLoading) {
                 setIsLoading(true);
-                // fetchProducts(skip, 10).then(data => {
-                //     setProducts(prevProducts => [...prevProducts, ...data]);
-                //     skip += 10;
-                //     data.length > 0 ? setHasmore(true) : setHasmore(false);
-                //     setIsLoading(false);
-                // });
+                fetchProducts(skip, 10).then(data => {
+                    setProducts(prevProducts => [...prevProducts, ...data]);
+                    skip += 10;
+                    data.length > 0 ? setHasmore(true) : setHasmore(false);
+                    setIsLoading(false);
+                });
             }
         };
         window.addEventListener('scroll', handleScroll);
